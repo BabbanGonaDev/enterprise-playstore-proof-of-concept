@@ -5,17 +5,17 @@ pipeline {
 
     stages {
         
-        stage('Code Quality Check via SonarQube') {
-           steps{
-           script{ 
-          def scannerHome = tool 'sonarqube-scanner';
-          withSonarQubeEnv("babbangona-dev") {
-               sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=collection-center-payment -Dsonar.sources=. -Dsonar.css.node=. -Dsonar.host.url=http://localhost:9000/ -Dsonar.login=80a14365591bacdb6a2ddf5b5096ba78547f886e -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
-               }
+        // stage('Code Quality Check via SonarQube') {
+        //   steps{
+        //   script{ 
+        //   def scannerHome = tool 'sonarqube-scanner';
+        //   withSonarQubeEnv("babbangona-dev") {
+        //       sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=collection-center-payment -Dsonar.sources=. -Dsonar.css.node=. -Dsonar.host.url=http://localhost:9000/ -Dsonar.login=80a14365591bacdb6a2ddf5b5096ba78547f886e -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
+        //       }
 		   
-             }
-           }
-        }
+        //      }
+        //   }
+        // }
 //         stage('Unit Test'){
 
 //           steps{
@@ -27,18 +27,22 @@ pipeline {
         stage (' building app') {
             // when { branch 'develop' }
             steps {
-                echo 'Deploying the application to develop...'
+                sh "echo Deploying the application to develop..."
+                sh "echo sdk.dir=/var/dev/android >> local.properties"
+                sh "ls"
+                sh "sudo chmod -R 777 ."
+                sh "/opt/gradle/gradle-7.6/bin/gradle wrapper"
                 sh "./gradlew bundle"
                             }
         }
 
-        stage ('deploying to playstore') {
-            // when { branch 'develop' }
-            steps {
-                echo 'Deploying the application to develop...'
-                sh "./gradlew bundle"
-                            }
-        }
+        // stage ('deploying to playstore') {
+        //     // when { branch 'develop' }
+        //     steps {
+        //         echo 'Deploying the application to develop...'
+        //         sh "./gradlew bundle"
+        //                     }
+        // }
 
         // stage ('Deploying in Prod Environment: production') {
         //     when { branch 'production'  }
