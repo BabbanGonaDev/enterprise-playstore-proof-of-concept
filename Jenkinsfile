@@ -29,10 +29,11 @@ pipeline {
             steps {
                 sh "echo Deploying the application to develop..."
                 sh "echo sdk.dir=/var/dev/android >> local.properties"
-                sh "ls"
-                sh "sudo chmod -R 777 ."
-                sh "/opt/gradle/gradle-7.6/bin/gradle wrapper"
-                sh "./gradlew bundle"
+                // sh "ls"
+                // sh "sudo chmod -R 777 ."
+                sh "sudo /opt/gradle/gradle-7.6/bin/gradle wrapper"
+                sh "sudo ./gradlew bundle"
+                sh "sudo ./gradlew --stop"
                             }
         }
 
