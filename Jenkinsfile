@@ -37,6 +37,14 @@ pipeline {
                             }
         }
 
+        stage ('archiving artifacts') {
+            // when { branch 'develop' }
+            steps {
+                archiveArtifacts artifacts: '/app/enterprise-playstore-proof-of-concept/app/build/outputs/*', followSymlinks: false, onlyIfSuccessful: true
+ 
+                            }
+        }
+
         // stage ('deploying to playstore') {
         //     // when { branch 'develop' }
         //     steps {
