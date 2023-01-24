@@ -40,7 +40,7 @@ pipeline {
         stage ('archiving artifacts') {
             // when { branch 'develop' }
             steps {
-                archiveArtifacts artifacts: '/app/enterprise-playstore-proof-of-concept/app/build/outputs/*', followSymlinks: false, onlyIfSuccessful: true
+                archiveArtifacts artifacts: 'app/build/outputs/bundle/release/*aab', followSymlinks: false, onlyIfSuccessful: true
  
                             }
         }
