@@ -37,6 +37,22 @@ pipeline {
                             }
         }
 
+
+        stage ('signing the app') {
+            // when { branch 'develop' }
+            steps {
+                withCredentials([file(credentialsId: 'secret', variable: 'FILE')]) {
+                    sh 'jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore $FILE app/build/outputs/bundle/release/app-release.aab'
+                }
+                // sh "echo sdk.dir=/var/dev/android >> local.properties"
+                // // sh "ls"
+                // // sh "sudo chmod -R 777 ."
+                // sh "sudo /opt/gradle/gradle-7.6/bin/gradle wrapper"
+                // sh "sudo ./gradlew bundle"
+                // sh "sudo ./gradlew --stop"
+                            }
+        }
+
         stage ('archiving artifacts') {
             // when { branch 'develop' }
             steps {
