@@ -41,8 +41,8 @@ pipeline {
         stage ('signing the app') {
             // when { branch 'develop' }
             steps {
-                withCredentials([file(credentialsId: 'secret', variable: 'FILE')]) {
-                    sh 'jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore $FILE app/build/outputs/bundle/release/app-release.aab'
+                withCredentials([file(credentialsId: 'playstore.jks', variable: 'FILE')]) {
+                    sh 'sudo jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore $FILE app/build/outputs/bundle/release/app-release.aab key0 -storepass "QwU3.p^p"'
                 }
                 // sh "echo sdk.dir=/var/dev/android >> local.properties"
                 // // sh "ls"
