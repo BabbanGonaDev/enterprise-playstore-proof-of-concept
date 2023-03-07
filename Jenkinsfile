@@ -57,7 +57,6 @@ pipeline {
             // when { branch 'develop' }
             steps {
                 archiveArtifacts artifacts: 'app/build/outputs/bundle/release/*aab', followSymlinks: false, onlyIfSuccessful: true
-               androidApkUpload filesPattern: '**/build/outputs/**/*release.aab, **/build/outputs/**/*release.apk', googleCredentialsId: 'Playstore api access', rolloutPercentage: '100', trackName: 'production'
  
                             }
         }
