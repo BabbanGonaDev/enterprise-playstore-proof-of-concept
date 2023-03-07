@@ -2,9 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
-// Used to set the package version name and version code
-ext.versionMajor = 1
-ext.versionMinor = 2
 
 android {
     compileSdk 32

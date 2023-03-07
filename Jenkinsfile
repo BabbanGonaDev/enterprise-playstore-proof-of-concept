@@ -1,8 +1,9 @@
 pipeline {
     agent any
-
+    environment {
+        STORE_PASS = credentials('STORE_PASS') 
+    }
     
-
     stages {
         
         // stage('Code Quality Check via SonarQube') {
@@ -40,7 +41,7 @@ pipeline {
             // when { branch 'develop' }
             steps {
                 withCredentials([file(credentialsId: 'playstore.jks', variable: 'FILE')]) {
-                    sh 'sudo jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore $FILE app/build/outputs/bundle/release/app-release.aab key0 -storepass "QwU3.p^p"'
+                    sh 'sudo jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore $FILE app/build/outputs/bundle/release/app-release.aab key0 -storepass ${STORE_PASS}'
                 }
                             }
         }
