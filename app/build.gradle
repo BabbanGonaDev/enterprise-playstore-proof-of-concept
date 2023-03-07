@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
+// Used to set the package version name and version code
+ext.versionMajor = 1
+ext.versionMinor = 2
 
 android {
     compileSdk 32
@@ -31,10 +34,12 @@ android {
     }
 }
 
-// Will return 42 for Jenkins build #42
+// Will return 120042 for Jenkins build #42
 def computeVersionCode() {
-    // Jenkins build number (where available)
-    return  Integer.valueOf(System.getenv('BUILD_NUMBER'))
+    // Major + minor + Jenkins build number (where available)
+    return (versionMajor * 100000)
+             + (versionMinor * 10000)
+             + Integer.valueOf(System.env.BUILD_NUMBER ?: 0)
 }
 
 dependencies {
