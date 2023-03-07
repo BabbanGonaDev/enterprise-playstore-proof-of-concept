@@ -29,8 +29,6 @@ pipeline {
             steps {
                 sh "echo Deploying the application to develop..."
                 sh "echo sdk.dir=/var/dev/android >> local.properties"
-                // sh "ls"
-                // sh "sudo chmod -R 777 ."
                 sh "sudo /opt/gradle/gradle-7.6/bin/gradle wrapper"
                 sh "sudo ./gradlew bundle"
                 sh "sudo ./gradlew --stop"
@@ -44,12 +42,14 @@ pipeline {
                 withCredentials([file(credentialsId: 'playstore.jks', variable: 'FILE')]) {
                     sh 'sudo jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore $FILE app/build/outputs/bundle/release/app-release.aab key0 -storepass "QwU3.p^p"'
                 }
-                // sh "echo sdk.dir=/var/dev/android >> local.properties"
-                // // sh "ls"
-                // // sh "sudo chmod -R 777 ."
-                // sh "sudo /opt/gradle/gradle-7.6/bin/gradle wrapper"
-                // sh "sudo ./gradlew bundle"
-                // sh "sudo ./gradlew --stop"
+                            }
+        }
+
+        stage ('deploying to playstore') {
+            // when { branch 'develop' }
+            steps {
+               androidApkUpload filesPattern: '**/build/outputs/**/*release.aab, **/build/outputs/**/*release.apk', googleCredentialsId: 'Playstore api access', rolloutPercentage: '100', trackName: 'production'
+ 
                             }
         }
 
@@ -57,34 +57,11 @@ pipeline {
             // when { branch 'develop' }
             steps {
                 archiveArtifacts artifacts: 'app/build/outputs/bundle/release/*aab', followSymlinks: false, onlyIfSuccessful: true
+               androidApkUpload filesPattern: '**/build/outputs/**/*release.aab, **/build/outputs/**/*release.apk', googleCredentialsId: 'Playstore api access', rolloutPercentage: '100', trackName: 'production'
  
                             }
         }
 
-        // stage ('deploying to playstore') {
-        //     // when { branch 'develop' }
-        //     steps {
-        //         echo 'Deploying the application to develop...'
-        //         sh "./gradlew bundle"
-        //                     }
-        // }
-
-        // stage ('Deploying in Prod Environment: production') {
-        //     when { branch 'production'  }
-        //     steps {
-        //         echo 'Deploying the application to production...'
-        //         sshPublisher(publishers: [sshPublisherDesc(configName: 'centos-wp', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: ''' 
-        //         GITUSER=$(cat gituser.txt)
-        //         GITPASSWD=$(cat gittoken.txt)
-		// USERPASSWD=$(cat password.txt)
-        //         cd /var/www/html/collection_center_payment/
-        //         pwd
-        //         hostname
-		// echo $USERPASSWD | sudo -S git pull https://$GITUSER:$GITPASSWD@github.com/BabbanGonaDev/collection_center_payment.git
-		
-        //         ''', execTimeout: 2000000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.tar.gz')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])        
-        //     }
-        // }
     }
 }
   
