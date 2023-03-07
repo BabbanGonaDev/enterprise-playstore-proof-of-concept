@@ -48,7 +48,7 @@ pipeline {
         stage ('deploying to playstore') {
             // when { branch 'develop' }
             steps {
-               androidApkUpload filesPattern: '**/build/outputs/**/*release.aab, **/build/outputs/**/*release.apk', googleCredentialsId: 'Playstore api access', rolloutPercentage: '100', trackName: 'production'
+               androidApkUpload filesPattern: '**/build/outputs/**/*release.aab', googleCredentialsId: 'Playstore api access', rolloutPercentage: '100', trackName: 'production'
  
                             }
         }
