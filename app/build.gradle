@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
+// Used to set the package version name and version code
+ext.versionMajor = 1
+ext.versionMinor = 2
 
 android {
     compileSdk 32
@@ -10,7 +13,7 @@ android {
         applicationId "com.babbangona.enterpriseplaystorepoc"
         minSdk 24
         targetSdk 32
-        versionCode 13
+        versionCode computeVersionCode()
         versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,6 +32,14 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
+
+// Will return 120042 for Jenkins build #42
+def computeVersionCode() {
+    // Major + minor + Jenkins build number (where available)
+    return (versionMajor * 100000)
+             + (versionMinor * 10000)
+             + Integer.valueOf(System.env.BUILD_NUMBER ?: 0)
 }
 
 dependencies {
