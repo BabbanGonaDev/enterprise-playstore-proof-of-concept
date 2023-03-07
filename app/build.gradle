@@ -34,7 +34,7 @@ android {
 // Will return 42 for Jenkins build #42
 def computeVersionCode() {
     // Jenkins build number (where available)
-    return  Integer.valueOf(System.getenv('BUILD_NUMBER') ?: 0)
+    return  Integer.valueOf(System.getenv('BUILD_NUMBER'))
 }
 
 dependencies {
