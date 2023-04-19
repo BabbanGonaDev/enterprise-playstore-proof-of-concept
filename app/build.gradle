@@ -13,8 +13,8 @@ android {
         applicationId "com.babbangona.enterpriseplaystorepoc"
         minSdk 24
         targetSdk 32
-        versionCode computeVersionCode()
-        versionName "1.2"
+        versionCode 17
+        versionName "1.5.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
