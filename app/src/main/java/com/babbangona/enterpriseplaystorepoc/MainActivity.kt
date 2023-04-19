@@ -12,6 +12,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         tv = findViewById(R.id.tvH2)
-        tv.text = "This is the beta-testing branch versionName: ${BuildConfig.VERSION_NAME}"
+        tv.text = "This is the closed-testing branch versionName: ${BuildConfig.VERSION_NAME}"
     }
 }
